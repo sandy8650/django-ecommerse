@@ -18,5 +18,5 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    def get_url(self):
+    def get_product_url(self):
         return reverse('products:product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})

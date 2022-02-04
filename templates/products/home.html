@@ -26,13 +26,13 @@
 
 
         <div class="row">
-            {% for product in products %}
+            {% for single_product in products %}
             <div class="col-md-3">
                 <div class="card card-product-grid">
-                    <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}"> </a>
+                    <a href="{{ product.get_product_url }}" class="img-wrap"> <img src="{{ single_product.image.url }}"> </a>
                     <figcaption class="info-wrap">
-                        <a href="{{ product.get_url }}" class="title">{{ product.title }}</a>
-                        <div class="price mt-1">INR {{ product.price }}</div> <!-- price-wrap.// -->
+                        <a href="{{ product.get_product_url }}" class="title">{{ single_product.title }}</a>
+                        <div class="price mt-1">INR {{ single_product.price }}</div> <!-- price-wrap.// -->
                     </figcaption>
                 </div>
             </div> <!-- col.// -->
