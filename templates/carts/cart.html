@@ -31,7 +31,7 @@
         <tr>
             <td>
                 <figure class="itemside align-items-center">
-                    <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
+                    <div class="aside"><a href="{{ cart_item.product.get_product_url }}"><img src="{{ cart_item.product.image.url }}" class="img-sm"></a></div>
                     <figcaption class="info">
                         <a href="{{ cart_item.product.get_product_url }}" class="title text-dark">{{ cart_item.product.title }}</a>
                         <p class="text-muted small">Color: 25 Mpx <br> Brand: Canon</p>
