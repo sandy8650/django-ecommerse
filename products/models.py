@@ -1,4 +1,3 @@
-from random import choice
 from django.db import models
 from django.urls import reverse
 from category.models import Category

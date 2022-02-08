@@ -48,7 +48,7 @@
                   <select name="color" class="form-control" required>
                     <option value="" disabled selected>Choose Color</option>
                     {% for i in product.variation_set.sizes %}
-                    <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
+                      <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -79,7 +79,7 @@
       <div class="col-md-9">
 
         <header class="section-heading">
-          <h3>Customer Reviews </h3>
+          <h3>Customer Reviews</h3>
 
         </header>
 
@@ -87,7 +87,7 @@
           <div class="icontext w-100">
             <img src="./images/avatars/avatar1.jpg" class="img-xs icon rounded-circle">
             <div class="text">
-              <span class="date text-muted float-md-right">24.04.2020 </span>
+              <span class="date text-muted float-md-right">24.04.2020</span>
               <h6 class="mb-1">Mike John </h6>
 
             </div>
