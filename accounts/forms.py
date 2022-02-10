@@ -1,11 +1,12 @@
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+from .models import UserProfile
+
+User = UserProfile
 
 
-User = get_user_model()
 
-
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(UserCreationForm):
     password = forms.CharField(max_length=150, widget=forms.PasswordInput(attrs={
         'placeholder': 'Enter Password',
         'class': 'form-control'
@@ -30,7 +31,7 @@ class RegistrationForm(forms.ModelForm):
 
 
     def clean(self):
-        claened_data = super(RegistrationForm, self).clean()
+        cleaned_data = super(RegistrationForm, self).clean()
         password = self.cleaned_data.get('password')
         confirm_password = self.cleaned_data.get('confirm_password')
         if password and confirm_password and password != confirm_password:
