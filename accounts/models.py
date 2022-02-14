@@ -1,17 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 
 
 class UserCustomManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, username, password=None):
+    def create_user(self, email, first_name, last_name, password=None):
         if not email:
             raise ValueError('User must have an email address')
-        if not username:
-            raise ValueError('User must have an username')
 
         user = self.model(
             email = self.normalize_email(email),
-            username = username,
             first_name = first_name,
             last_name = last_name
         )
@@ -19,18 +16,17 @@ class UserCustomManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, email, first_name, last_name, username, password):
+    def create_superuser(self, email, first_name, last_name, password=None):
         user = self.create_user(
-            email = self.normalize_email(email),
+            email = email,
             first_name = first_name,
             last_name = last_name,
-            username = username,
             password = password
         )
+        user.staff = True
+        user.admin = True
         user.is_active = True
-        user.is_staff = True
-        user.is_admin = True
-        user.is_superadmin = True
+        user.superadmin = True
         user.save(using=self._db)
         return user
 
@@ -38,19 +34,18 @@ class UserCustomManager(BaseUserManager):
 class UserProfile(AbstractBaseUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150, blank=True)
-    username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(max_length=150, unique=True)
     phone_number = models.IntegerField(blank=True, null=True)
 
     joined_date = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_superadmin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    staff = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+    superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = UserCustomManager()
 
@@ -63,10 +58,10 @@ class UserProfile(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def has_perm(self, perms, obj=None):
-        return self.is_admin
+    def has_perm(self, perm, obj=None):
+        return True
 
-    def has_module_perms(self, add_label):
+    def has_module_perms(self, app_label):
         return True
     
     def full_name(self):
@@ -75,3 +70,10 @@ class UserProfile(AbstractBaseUser):
     def short_name(self):
         return self.first_name
     
+    @property
+    def is_staff(self):
+        return self.staff
+
+    @property
+    def is_admin(self):
+        return self.admin

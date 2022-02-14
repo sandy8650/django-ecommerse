@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+import debug_toolbar
 
 
 urlpatterns = [
@@ -9,6 +10,7 @@ urlpatterns = [
     path('', include('products.urls', namespace='products')),
     path('cart/', include('carts.urls', namespace='carts')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 
