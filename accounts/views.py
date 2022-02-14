@@ -1,19 +1,28 @@
 from django.shortcuts import redirect, render
+<<<<<<< HEAD
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+=======
+
+from .forms import RegisterationForm
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
 
 
 def register(request):
     if request.method == "POST":
-        form = RegistrationForm(request.POST)   
+        form = RegisterationForm(request.POST)   
         if form.is_valid():
             form.save()
+<<<<<<< HEAD
             messages.success(request, 'Registration Successful')
             return redirect('accounts:login')
+=======
+            return redirect('products:home')
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
     else:
-        form = RegistrationForm()
+        form = RegisterationForm()
     context = {
         'form': form,
     }   

@@ -2,7 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 
 
+<<<<<<< HEAD
 class UserCustomManager(BaseUserManager):
+=======
+class UserManager(BaseUserManager):
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
     def create_user(self, email, first_name, last_name, password=None):
         if not email:
             raise ValueError('User must have an email address')
@@ -23,15 +27,21 @@ class UserCustomManager(BaseUserManager):
             last_name = last_name,
             password = password
         )
+<<<<<<< HEAD
         user.staff = True
         user.admin = True
         user.is_active = True
+=======
+        user.active = True
+        user.staff = True
+        user.admin = True
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
         user.superadmin = True
         user.save(using=self._db)
         return user
 
 
-class UserProfile(AbstractBaseUser):
+class User(AbstractBaseUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(max_length=150, unique=True)
@@ -39,22 +49,23 @@ class UserProfile(AbstractBaseUser):
 
     joined_date = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
+<<<<<<< HEAD
     is_active = models.BooleanField(default=False)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     superadmin = models.BooleanField(default=False)
+=======
+    active = models.BooleanField(default=True)
+    staff = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    objects = UserCustomManager()
+    objects = UserManager()
 
-
-    class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
         
-
     def __str__(self):
         return self.email
 
@@ -76,4 +87,8 @@ class UserProfile(AbstractBaseUser):
 
     @property
     def is_admin(self):
+<<<<<<< HEAD
         return self.admin
+=======
+        return self.admin
+>>>>>>> 4710397c97df0ed639ec731e8792e78cf5f126f4
